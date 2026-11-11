@@ -20,7 +20,7 @@ SRC="$REPO/skills"
 DEFAULT_TARGET="$HOME/.agents/skills"
 # Backups live outside every skills dir: a backup left beside the original would still
 # hold a SKILL.md and be loaded as a duplicate skill.
-BACKUP_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/agent-skills/backups"
+BACKUP_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/assistant_skills/backups"
 
 mode=link force=0 action=install
 skills=() targets=()

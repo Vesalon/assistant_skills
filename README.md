@@ -10,9 +10,10 @@ directly, and the rest can be pointed at them (see below).
 |---|---|---|
 | [openalex](skills/openalex/SKILL.md) | Literature search, citation snowballing, author disambiguation and citation-graph mapping through the [OpenAlex](https://openalex.org) API, with a bundled CLI (`oa.py`) and DuckDB views | Python ≥ 3.10; [uv](https://docs.astral.sh/uv/) for the `sql` command; optional free API key |
 | [papis](skills/papis/SKILL.md) | Drive a local [papis](https://github.com/papis/papis) bibliography: search, add by DOI/arXiv/ISBN, export and audit BibTeX, while avoiding papis's silent non-TTY failure modes | papis (written against 0.15) with at least one library configured |
+| [figure-craft](skills/figure-craft/SKILL.md) | Design and critique research plots and schematics, from quick feedback to whole figure sets; align figures with text, compare visual alternatives, and retain decisions across sessions | none for guidance; production tools depend on the project |
 
-The two skills work together: openalex finds papers, and papis keeps the ones you want and
-produces the `.bib`.
+openalex finds papers; papis keeps the ones you want and produces the `.bib`; figure-craft
+helps communicate research through figures. Each skill also works independently.
 
 ## Install
 

@@ -75,6 +75,19 @@ check() {
           warn "  get a free key from an openalex.org account, then:"
           warn "  mkdir -p ~/.config/openalex && (umask 077; printf %s KEY > ~/.config/openalex/api_key)"
         fi ;;
+      pdf-convert)
+        if command -v uv >/dev/null; then ok "uv (pdf-convert: provides pypdf and keyring)"
+        else warn "uv not found: pdf-convert works, but without page counts before upload or the OS keyring"; fi
+        if command -v pandoc >/dev/null; then ok "pandoc (pdf-convert: LaTeX output)"
+        else warn "pandoc not found: pdf-convert works except --format latex"; fi
+        pc="${XDG_CONFIG_HOME:-$HOME/.config}/pdf-convert"
+        if [ -n "${DATALAB_API_KEY:-}" ]; then ok "Datalab API key (\$DATALAB_API_KEY)"
+        elif [ -s "$pc/api_key" ] || grep -q '"key_store": "keyring"' "$pc/config.json" 2>/dev/null; then
+          ok "Datalab API key stored (\`pdfc.py doctor\` verifies it)"
+        else
+          warn "no Datalab API key: run \`uv run $SRC/pdf-convert/pdfc.py setup\` in your own terminal,"
+          warn "  and give the key a 30-day spend cap at https://www.datalab.to/app/keys"
+        fi ;;
       papis)
         if command -v papis >/dev/null; then
           ok "papis $(papis --version 2>/dev/null | awk '{print $NF}')"

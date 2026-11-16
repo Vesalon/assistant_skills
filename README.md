@@ -10,10 +10,12 @@ directly, and the rest can be pointed at them (see below).
 |---|---|---|
 | [openalex](skills/openalex/SKILL.md) | Literature search, citation snowballing, author disambiguation and citation-graph mapping through the [OpenAlex](https://openalex.org) API, with a bundled CLI (`oa.py`) and DuckDB views | Python ≥ 3.10; [uv](https://docs.astral.sh/uv/) for the `sql` command; optional free API key |
 | [papis](skills/papis/SKILL.md) | Drive a local [papis](https://github.com/papis/papis) bibliography: search, add by DOI/arXiv/ISBN, export and audit BibTeX, while avoiding papis's silent non-TTY failure modes | papis (written against 0.15) with at least one library configured |
+| [pdf-convert](skills/pdf-convert/SKILL.md) | Convert PDFs (and Word, PowerPoint, images) to markdown, LaTeX, HTML or JSON with figures through the [Datalab](https://www.datalab.to) marker API, at a chosen level of detail, with a bundled CLI (`pdfc.py`) that guards spend: page limit, 30-day budget, cache, no double-billed retries | Python ≥ 3.10; a Datalab API key; [uv](https://docs.astral.sh/uv/) recommended; pandoc for LaTeX |
 | [figure-craft](skills/figure-craft/SKILL.md) | Design and critique research plots and schematics, from quick feedback to whole figure sets; align figures with text, compare visual alternatives, and retain decisions across sessions | none for guidance; production tools depend on the project |
 
-openalex finds papers; papis keeps the ones you want and produces the `.bib`; figure-craft
-helps communicate research through figures. Each skill also works independently.
+openalex finds papers; papis keeps the ones you want and produces the `.bib`; pdf-convert
+turns their PDFs into text an agent can read; figure-craft helps communicate research
+through figures. Each skill also works independently.
 
 ## Install
 
@@ -59,6 +61,20 @@ on demand.
 - **papis:** `uv tool install papis` (or `pipx install papis`), then configure a library in
   `~/.config/papis/config`. See the [papis docs](https://papis.readthedocs.io). Check it with
   `papis list --libraries`.
+
+- **pdf-convert:** `python3` ≥ 3.10 and a Datalab API key. Running through `uv run` adds
+  pypdf (page counts before upload) and keyring (stores the key in the OS credential store);
+  without them the CLI still works. Create a key just for agents at
+  [datalab.to/app/keys](https://www.datalab.to/app/keys) and **give it a 30-day spend cap**:
+  that cap is the only hard limit on what an agent can spend. Then store it, in your own
+  terminal so the key never passes through an agent conversation:
+
+  ```bash
+  uv run skills/pdf-convert/pdfc.py setup     # asks for the key (hidden), verifies, stores it
+  uv run skills/pdf-convert/pdfc.py doctor    # checks key, pandoc, budget
+  ```
+
+  [pandoc](https://pandoc.org/installing.html) is needed only for LaTeX output.
 
 ## Updating
 

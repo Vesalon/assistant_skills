@@ -16,6 +16,9 @@ This repo holds portable agent skills (`skills/<name>/SKILL.md` plus scripts). R
    user creates the account and pastes the key; write it to `~/.config/openalex/api_key`
    with mode 600, and never echo it back or put it in a command that gets logged. Papis
    library configuration is the user's choice of directories: ask, don't invent.
+   For pdf-convert, never take the Datalab key in chat: ask the user to run
+   `uv run skills/pdf-convert/pdfc.py setup` in their own terminal, and to set a 30-day spend
+   cap on the key in the Datalab dashboard. Confirm with `pdfc.py doctor`.
 5. If the harness has no native skill support, run `./install.sh --index` and offer to add
    its output to the user's global agent instruction file.
 6. Tell the user to start a new agent session. Most harnesses scan skills only at startup.
